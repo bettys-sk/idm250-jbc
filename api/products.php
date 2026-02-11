@@ -4,20 +4,24 @@ header('Access-Control-Allow-Origin: *');
 
 require_once '../db_connect.php';
 require_once '../auth.php';
+require_once '../lib/cms.php';
 
 check_api_key($env);
 
 $method = $_SERVER['REQUEST_METHOD'];
-$id = isset($_SERVER['PATH_INFO']) ? intval(ltrim($_server['path_info'], '/')) : 0;
 
 
 if ($method === 'GET') :
-	$product_list = $get_products();
-    if ($product_list) {
-        echo json_encode(['sucess' => true, 'Product List' => $product_list]);
+	$data = get_products();
+    if ($data) {
+        echo json_encode(['success' => true,
+        'total_products' => $data['total'],
+        'products' => $data['products']]);
     }
+    
     else {
         http_response_code(404);
-        echo json_encode(['error' => 'Product not found']);
+        echo json_encode(['error' => 'Products not found']);
     }
 endif;
+ 
