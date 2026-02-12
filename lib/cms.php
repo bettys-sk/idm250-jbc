@@ -13,9 +13,8 @@ function create_product($data){
     $weight = floatval($data['weight']);
 
     // will insert into the database
-    $stmt = $connection->prepare("INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('ssssiiidd', $sku, $desc, $uom, $piece, $length, $width, $height, $weight);
-
+    $stmt = $connection->prepare("INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssiiidd', $sku, $desc, $uom, $piece, $length, $width, $height, $weight);
     // returns the id that is assigned to new product
     if($stmt->execute()) {
         return $connection->insert_id;
@@ -59,11 +58,13 @@ function update_product($id, $data) {
     $height = floatval($data['height']);
     $weight = floatval($data['weight']);
 
+    // betty: changed 'products' to 'cms_products', removed 'name' field, removed comma before WHERE
     $stmt = $connection->prepare(
-        "UPDATE products SET name = ?, sku = ?, description = ?, uom = ?, piece = ?, length = ?, width = ?, height = ?, weight = ?, WHERE id = ? LIMIT 1"
+        "UPDATE cms_products SET sku = ?, description = ?, uom = ?, piece = ?, length = ?, width = ?, height = ?, weight = ? WHERE id = ? LIMIT 1"
     );
 
-    $stmt->bind_param('ssssiiiddi', $sku, $desc, $uom, $piece, $length, $width, $height, $weight, $id);
+    // betty: 9 type specifiers (sssiiidd i) instead of 10, matches 8 fields + 1 id
+    $stmt->bind_param('sssiiiddi', $sku, $desc, $uom, $piece, $length, $width, $height, $weight, $id);
 
     if ($stmt->execute()) {
         return $stmt->affected_rows;
@@ -89,4 +90,22 @@ function get_products() {
     }
 }
 
+function delete_product($id) {
+    global $connection;
+    
+    $stmt = $connection->prepare("DELETE FROM cms_products WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    
+    return $stmt->execute();
+}
+
+function get_product_count() {
+    global $connection;
+    
+    $result = $connection->query("SELECT COUNT(*) as count FROM cms_products");
+    $row = $result->fetch_assoc();
+    
+    return $row['count'];
+}
+?>
 ?>

@@ -6,13 +6,11 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $product = $id ? get_product($id) : [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     if ($id) {
         update_product($id, $_POST);
     } else {
         create_product($_POST);
     }
-
     header('Location: index.php');
     exit;
 }
