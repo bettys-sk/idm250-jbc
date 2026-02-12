@@ -24,4 +24,3 @@ if ($method === 'GET') :
         echo json_encode(['error' => 'Products not found']);
     }
 endif;
- 
