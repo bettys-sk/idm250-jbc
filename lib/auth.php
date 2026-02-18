@@ -18,7 +18,7 @@ function check_api_key(array $env) {
     if ($provided_key !== $valid_key) {
         http_response_code(401);
         echo json_encode(['error' => 'Unauthorized: Invalid API Key']);
-        // exit;
+        exit;
     }
 }
 
