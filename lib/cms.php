@@ -88,7 +88,7 @@ function update_product($id, $data) {
 function get_products() {
     global $connection;
 
-    $stmt = $connection->prepare("SELECT sku, description, uom, piece, length, width, height, weight FROM cms_products");
+    $stmt = $connection->prepare("SELECT sku, description, uom_primary, piece_count, length_inches, width_inches, height_inches, weight_lbs FROM cms_products");
     if($stmt->execute()) {
         $result = $stmt->get_result();
 	    $products = $result->fetch_all(MYSQLI_ASSOC);
