@@ -3,8 +3,8 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require_once '../db_connect.php';
-require_once '../auth.php';
-require_once '../lib/cms.php';
+require_once '../lib/auth.php';
+require_once '../lib/product.php';
 
 check_api_key($env);
 
