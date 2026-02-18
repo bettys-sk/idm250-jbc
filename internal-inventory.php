@@ -66,7 +66,7 @@ $result_count = $result->num_rows;
                     <tr>
                         <th>Order Number</th>
                         <th>Unit Number</th>
-                        <th>Item Number</th>
+                        <th>Ficha</th>
                         <th>Description</th>
                         <th>Quantity Shipped</th>
                         <th>Footage Quantity</th>
