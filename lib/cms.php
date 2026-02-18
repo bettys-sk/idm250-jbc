@@ -13,11 +13,7 @@ function create_product($data){
     $weight = floatval($data['weight']);
 
     // will insert into the database
-<<<<<<< Updated upstream
-    $stmt = $connection->prepare("INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) VALUES (?, ?, ?, ?)");
-=======
     $stmt = $connection->prepare("INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
->>>>>>> Stashed changes
     $stmt->bind_param('ssssiiidd', $sku, $desc, $uom, $piece, $length, $width, $height, $weight);
 
     // returns the id that is assigned to new product
